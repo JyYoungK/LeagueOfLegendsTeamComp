@@ -1,43 +1,61 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
-const TeamComp = require("./models/productModel");
+const teamCompSchema = require("./models/schema");
 const app = express();
+// const TeamComp = require("./models/productModel");
+
+const cors = require("cors");
+
 const PORT = 5000;
 
+//Add cors or else it will throw a CORS policy error when trying to fetch
+app.use(cors());
 //Add Middleware or else it won't send any body in POST call!!!
 app.use(express.json());
-
-//--bodyParser and Cors are both middleware
-
-//body-parser is a middleware that is commonly used in Node.js web applications to parse incoming request bodies in a middleware before handling the request. It allows you to extract data from the request body and make it available in your server-side code.
-
-// app.use(bodyParser.json());
-
-// app.use("/users", usersRoutes);
-
-// const MONGO_URL =
-//   "mongodb+srv://JYK:y73VJIozpDkIV16Z@lolteamcomp.ah4jfli.mongodb.net/?retryWrites=true&w=majority";
-// const apiKey = "RGAPI-882dc7ba-cf6f-4b33-954f-ce37583cef21";
-// const region = "NA1_";
-// const gameID = "4625425939";
-
-//app.use(cors())
-//CORS stands for Cross-Origin Resource Sharing. In Node.js, CORS is a mechanism that allows web applications running on one domain to access resources from another domain. It is a security feature that helps prevent unauthorized access to a server's resources from a different origin.
-
-//Installing Nodemon in your Node.js project allows you to automatically restart the server whenever changes are made to your code, eliminating the need to manually restart the server each time you make updates.
-
-//-dev what does this do? When we publish our application, no one is going to be running our server. So we are installing this dependency only for our own development purposes.
 
 app.get("/", (req, res) => {
   //First route
   res.send("This is a server to call League of Legends Team Comp");
 });
 
-//Add to database
-app.post("/teamcompNA", async (req, res) => {
+//Find Games Played
+app.get("/allGamesPlayedNA", async (req, res) => {
   try {
-    const existingTeamComp = await TeamComp.findOne({
+    const count = await TeamComp.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//Find Top Played Team Comps
+app.get("/topTeamCompsNA", async (req, res) => {
+  try {
+    const topTeamComps = await TeamComp.find({}).sort({ played: -1 }).limit(10);
+    res.status(200).json(topTeamComps);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//Add teamcomps to database
+app.post("/updateTeamCompsNA", async (req, res) => {
+  try {
+    const gameType = req.body.gameType;
+    let gameTier;
+
+    //Only show gameTier if it's ranked games
+    if (gameType === "Ranked Solo") {
+      gameTier = req.body.gameTier;
+    } else if (gameType === "Ranked Flex") {
+      gameTier = req.body.gameTier;
+    }
+
+    const modelName = gameTier + gameType.replace(" ", "");
+    const TeamCompModel = mongoose.model(modelName, teamCompSchema);
+
+    const existingTeamComp = await TeamCompModel.findOne({
       teamCompName: req.body.teamCompName,
     });
 
@@ -56,7 +74,7 @@ app.post("/teamcompNA", async (req, res) => {
         updateQuery.winRate =
           existingTeamComp.win / (existingTeamComp.played + 1);
       }
-      const updatedTeamComp = await TeamComp.findOneAndUpdate(
+      const updatedTeamComp = await TeamCompModel.findOneAndUpdate(
         { teamCompName: req.body.teamCompName },
         { $set: updateQuery },
         { new: true }
@@ -64,7 +82,7 @@ app.post("/teamcompNA", async (req, res) => {
       res.status(200).json(updatedTeamComp);
     } else {
       // If a document with the given teamCompName does not exist, create a new one
-      const newTeamComp = await TeamComp.create({
+      const newTeamComp = await TeamCompModel.create({
         ...req.body,
         played: 1,
         winRate: req.body.result ? 100 : 0,

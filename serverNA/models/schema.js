@@ -36,6 +36,4 @@ const teamCompSchema = mongoose.Schema(
   }
 );
 
-const TeamComp = mongoose.model("NATeamComp", teamCompSchema);
-
-module.exports = TeamComp;
+module.exports = teamCompSchema;
