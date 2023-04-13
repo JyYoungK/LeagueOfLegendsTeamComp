@@ -1,80 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Champion {
-  id: number;
-  key: string;
-  name: string;
-}
-
-interface ChampionMastery {
-  championPoints: number;
-  championId: number;
-  playerId: string;
-  championLevel: number;
-  chestGranted: boolean;
-  tokensEarned: number;
-  lastPlayTime: number;
-  championPointsSinceLastLevel: number;
-  championPointsUntilNextLevel: number;
-  summonerId: string;
-  totalChampionMasteryPoints: number;
-  totalChampionMasteryLevel: number;
-  wins: number;
-  losses: number;
-}
-
-const apiKey = "RGAPI-882dc7ba-cf6f-4b33-954f-ce37583cef21"; // Replace with your own API key
-const region = "na1"; // Replace with your desired region
-const championId = 266; // Replace with the ID of the desired champion (Aatrox in this example)
-const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Use a proxy server to bypass CORS restrictions
-const apiUrl = `https://${region}.api.riotgames.com`;
+import { TeamComp } from "./type";
+import { createTeamCompObjects } from "./component/result";
 
 const ChampionStats: React.FC = () => {
-  const [champion, setChampion] = useState<Champion | null>(null);
-  const [winRate, setWinRate] = useState<number | null>(null);
-
+  const region = "NA1_";
+  const API_KEY = "RGAPI-882dc7ba-cf6f-4b33-954f-ce37583cef21";
+  const gameIDs = Array.from({ length: 5601 }, (_, i) => 4625424000 + i);
+  const data = {
+    region: "NA",
+    teamCompName: "ASDA32",
+    result: true,
+  };
   useEffect(() => {
-    const getChampionStats = async () => {
-      try {
-        // First, get the list of champions
-        const championsUrl = `${proxyUrl}${apiUrl}/lol/match/v5/matches/NA_3254586315`;
-        const championsResponse = await axios.get(championsUrl);
-        console.log(championsResponse);
-        // const champions: { [key: string]: number } = championsResponse.data.keys;
+    const updateTeamCompData = async () => {
+      fetch("http://localhost:5000/teamcompNA", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-        // // Find the champion ID from the list of champions
-        // const championKey = Object.keys(champions).find((key) => champions[key] === championId);
-        // if (!championKey) {
-        //   throw new Error(`Champion with ID ${championId} not found`);
-        // }
-        // const championName = championKey.charAt(0).toUpperCase() + championKey.slice(1);
-        // setChampion({ id: championId, key: championKey, name: championName });
+      // for (const id of gameIDs) {
+      //   try {
+      //     const link = `https://americas.api.riotgames.com/lol/match/v5/matches/${region}${id}?api_key=${API_KEY}`;
+      //     const response = await fetch(link);
+      //     const data = await response.json();
+      //     const [teamCompWinner, teamCompLoser] = createTeamCompObjects(
+      //       region,
+      //       data
+      //     );
 
-        // // Finally, get the win rate for the specified champion
-        // const masteryUrl = `https://${region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{summonerId}/by-champion/${championId}?api_key=${apiKey}`;
-        // const masteryResponse = await axios.get(masteryUrl);
-        // const masteryData: ChampionMastery = masteryResponse.data;
-        // const winRate = masteryData.wins / (masteryData.wins + masteryData.losses);
-        // setWinRate(winRate);
-      } catch (error) {
-        console.error(error);
-      }
+      //   } catch (error) {
+      //     console.log(`Error fetching data for game ID ${id}:`, error);
+      //   }
+      // }
     };
-
-    getChampionStats();
+    updateTeamCompData();
   }, []);
 
   return (
     <div>
-      {champion && winRate ? (
+      {/* {champion && winRate ? (
         <div>
           <p>Champion: {champion.name}</p>
           <p>Win Rate: {winRate.toFixed(2)}</p>
         </div>
       ) : (
         <p>Loading...</p>
-      )}
+      )} */}
     </div>
   );
 };
