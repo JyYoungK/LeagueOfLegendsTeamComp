@@ -43,16 +43,15 @@ app.get("/topTeamCompsNA", async (req, res) => {
 app.post("/updateTeamCompsNA", async (req, res) => {
   try {
     const gameType = req.body.gameType;
-    let gameTier;
+    let modelName;
 
     //Only show gameTier if it's ranked games
-    if (gameType === "Ranked Solo") {
-      gameTier = req.body.gameTier;
+    if (gameType === "Ranked Solo" || gameType === "Ranked Flex") {
+      modelName = req.body.gameTier + gameType.replace(" ", "");
     } else if (gameType === "Ranked Flex") {
-      gameTier = req.body.gameTier;
+      modelName = gameType.replace(" ", "");
     }
 
-    const modelName = gameTier + gameType.replace(" ", "");
     const TeamCompModel = mongoose.model(modelName, teamCompSchema);
 
     const existingTeamComp = await TeamCompModel.findOne({
