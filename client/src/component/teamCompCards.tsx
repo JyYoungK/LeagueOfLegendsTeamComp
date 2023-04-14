@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import sampleData from "../sampleData";
 import { CompCards } from "../type";
 import {
   getTeamCompOverview,
@@ -8,6 +7,7 @@ import {
   getChampionStats,
 } from "../championAnalysis";
 import { rankTitles } from "../constant/gameDetails";
+import LOLLoading from "../assets/LOLLoading.gif";
 
 //https://op.gg/api/v1.0/internal/bypass/champions/na/ranked
 
@@ -29,13 +29,13 @@ function teamCompCards({
   useEffect(() => {
     let link;
     if (selectedMode === "Normal") {
-      link = `http://localhost:5000/getTopTeamCompsNA?gameType=normals&filterOption=${selectedOption}`;
+      link = `https://lolteamcompnaserver.onrender.com/getTopTeamCompsNA?gameType=normals&filterOption=${selectedOption}`;
     } else if (selectedMode === "ARAM") {
-      link = `http://localhost:5000/getTopTeamCompsNA?gameType=arams&filterOption=${selectedOption}`;
+      link = `https://lolteamcompnaserver.onrender.com/getTopTeamCompsNA?gameType=arams&filterOption=${selectedOption}`;
     } else if (selectedMode === "Solo/Duo") {
-      link = `http://localhost:5000/getTopTeamCompsNA?gameType=${rankTitles[selectedRank]}rankedsolos&filterOption=${selectedOption}`;
+      link = `https://lolteamcompnaserver.onrender.com/getTopTeamCompsNA?gameType=${rankTitles[selectedRank]}rankedsolos&filterOption=${selectedOption}`;
     } else {
-      link = `http://localhost:5000/getTopTeamCompsNA?gameType=${rankTitles[selectedRank]}rankedflexes&filterOption=${selectedOption}`;
+      link = `https://lolteamcompnaserver.onrender.com/getTopTeamCompsNA?gameType=${rankTitles[selectedRank]}rankedflexes&filterOption=${selectedOption}`;
     }
 
     fetch(link)
@@ -50,7 +50,9 @@ function teamCompCards({
   return (
     <div className="flex h-full w-full flex-col items-center justify-center text-center">
       {isLoadingData ? (
-        <div>Loading...</div>
+        <div className="flex h-full w-full items-center justify-center text-center">
+          <img src={LOLLoading} alt="loading" />
+        </div>
       ) : teamCompData.length > 0 ? (
         teamCompData.map((item, index) => {
           let tier;

@@ -61,12 +61,12 @@ export const createTeamCompObjects = async (
     );
     if (participant.win) {
       winningChampions.push(
-        participant.championName + "-" + participant.teamPosition
+        participant.teamPosition + "-" + participant.championName
       );
       winningTeamTier.push([flexTier, soloTier]);
     } else {
       losingChampions.push(
-        participant.championName + "-" + participant.teamPosition
+        participant.teamPosition + "-" + participant.championName
       );
       losingTeamTier.push([flexTier, soloTier]);
     }

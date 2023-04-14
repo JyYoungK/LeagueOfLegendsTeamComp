@@ -58,6 +58,7 @@ export function getTeamCompOverview(teamCompName: string) {
   let teamPowerSpike: string[] = [];
   champions.map((champion) => {
     const { name } = champion;
+    console.log(name);
     const { difficulty, powerSpike } = championDetails[name];
     teamDifficulty.push(difficulty);
     teamPowerSpike.push(powerSpike);
