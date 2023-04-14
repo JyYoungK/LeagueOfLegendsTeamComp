@@ -19,11 +19,10 @@ Demo URL: https://league-of-legends-team-comp.vercel.app/
 
 For further information check this link https://developer.riotgames.com/apis
 
-Note:
+### My Study Note:
+
 To allow to read variables from .env, you need to install
 
-npm install dotenv
+`npm install dotenv`
 
-and put
-
-require("dotenv").config();
+and put `require("dotenv").config()` in side nodeJS
