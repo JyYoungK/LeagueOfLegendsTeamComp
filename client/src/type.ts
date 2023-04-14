@@ -5,3 +5,10 @@ export interface TeamComp {
   gameTier: string;
   result: boolean;
 }
+
+export interface CompCards {
+  selectedRegion: string;
+  selectedMode: string;
+  selectedOption: string;
+  selectedRank: number;
+}

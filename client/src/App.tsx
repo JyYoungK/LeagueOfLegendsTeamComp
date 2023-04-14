@@ -1,55 +1,42 @@
 import { useState } from "react";
 import "./App.css";
 import CallAPI from "./callAPI";
-import IronRank from "./assets/Ranks/Season_2022-Iron.webp";
-import BronzeRank from "./assets/Ranks/Season_2022-Bronze.webp";
-import SilverRank from "./assets/Ranks/Season_2022-Silver.webp";
-import GoldRank from "./assets/Ranks/Season_2022-Gold.webp";
-import PlatinumRank from "./assets/Ranks/Season_2022-Platinum.webp";
-import DiamondRank from "./assets/Ranks/Season_2022-Diamond.webp";
-import MasterRank from "./assets/Ranks/Season_2022-Master.webp";
-import GrandmasterRank from "./assets/Ranks/Season_2022-Grandmaster.webp";
-import ChallengerRank from "./assets/Ranks/Season_2022-Challenger.webp";
+import { regions, gameModes, rankImages } from "./constant/gameDetails";
+import TeamCompCards from "./component/teamCompCards";
 
 // import ironImage from "./assets/Ranks/Season_2022-Iron.webp";
 
 function App() {
-  const [selectedRegion, setSelectedRegion] = useState("NA");
-  const [selectedMode, setSelectedMode] = useState("Solo/Duo");
-  const [selectedOption, setSelectedOption] = useState("popularPick");
+  const [selectedRegion, setSelectedRegion] = useState<string>("NA");
+  const [selectedMode, setSelectedMode] = useState<string>("Solo/Duo");
+  const [selectedOption, setSelectedOption] = useState<string>("popularPick");
+  const [selectedRank, setSelectedRank] = useState<number>(0);
 
   const handleOptionChange = (type: string, option: string) => {
     if (type === "region") {
       setSelectedRegion(option);
     } else if (type === "mode") {
       setSelectedMode(option);
-    } else {
+      console.log(selectedMode);
+    } else if (type === "option") {
       setSelectedOption(option);
+    } else {
+      if (selectedMode === "Solo/Duo" || selectedMode === "Flex") {
+        setSelectedRank(parseInt(option));
+      }
     }
   };
-
-  const rankImages = [
-    IronRank,
-    BronzeRank,
-    SilverRank,
-    GoldRank,
-    PlatinumRank,
-    DiamondRank,
-    MasterRank,
-    GrandmasterRank,
-    ChallengerRank,
-  ];
-
-  const regions = ["NA", "KR", "EUW", "EU", "JPN"];
-  const gameModes = ["Normal", "ARAM", "Solo/Duo", "Flex"];
 
   return (
     <div className="flex h-full w-full flex-col">
       {/* <CallAPI /> */}
-      <div className="flex h-1/5 w-full items-center justify-center border-2 border-black text-center">
-        <div className="text-6xl font-bold"> League of Legends Team Comp </div>
+      <div className="flex h-1/5 w-full items-center justify-center bg-sky-900 py-4 text-center">
+        <div className="text-6xl font-bold text-yellow-400">
+          {" "}
+          League of Legends Team Comp{" "}
+        </div>
       </div>
-      <div className="flex h-1/6 w-full flex-col items-center justify-between border-2 border-black text-center lg:flex-row">
+      <div className="flex h-1/6 w-full flex-col items-center justify-between bg-sky-900 py-4 text-center lg:flex-row">
         <div className="ml-4 flex flex-row">
           <div className="flex flex-row">
             <select
@@ -86,10 +73,13 @@ function App() {
                 name="option"
                 value="popularPick"
                 checked={selectedOption === "popularPick"}
-                onChange={() => handleOptionChange("type", "popularPick")}
-                className="h-4 w-4 border-gray-300 text-blue-500 focus:ring-blue-400"
+                onChange={() => handleOptionChange("option", "popularPick")}
+                className="h-4 w-4 border-gray-300 focus:ring-blue-400"
               />
-              <label htmlFor="popularPick" className="ml-2 text-gray-700">
+              <label
+                htmlFor="popularPick"
+                className="ml-2 font-bold text-white"
+              >
                 Popular Pick
               </label>
             </div>
@@ -99,10 +89,13 @@ function App() {
                 name="option"
                 value="highestWinRate"
                 checked={selectedOption === "highestWinRate"}
-                onChange={() => handleOptionChange("type", "highestWinRate")}
-                className="h-4 w-4 border-gray-300 text-blue-500 focus:ring-blue-400"
+                onChange={() => handleOptionChange("option", "highestWinRate")}
+                className="h-4 w-4 border-gray-300 focus:ring-blue-400"
               />
-              <label htmlFor="highestWinRate" className="ml-2 text-gray-700">
+              <label
+                htmlFor="highestWinRate"
+                className="ml-2 font-bold text-white"
+              >
                 Highest Win Rate
               </label>
             </div>
@@ -111,9 +104,28 @@ function App() {
 
         <div className="mr-8 grid grid-cols-5 gap-4 md:grid-cols-9">
           {rankImages.map((image, index) => (
-            <img key={index} src={image} alt={image} className="w-12" />
+            <button
+              key={index}
+              onClick={() => handleOptionChange("rank", index.toLocaleString())}
+              disabled={selectedMode !== "Solo/Duo" && selectedMode !== "Flex"}
+              className={`w-12 ${
+                selectedMode !== "Solo/Duo" && selectedMode !== "Flex"
+                  ? "grayscale"
+                  : ""
+              } ${selectedRank == index ? "bg-white" : ""}`}
+            >
+              <img src={image} alt={image} />
+            </button>
           ))}
         </div>
+      </div>
+      <div className="flex h-4/6 w-full items-center justify-center">
+        <TeamCompCards
+          selectedRegion={selectedRegion}
+          selectedMode={selectedMode}
+          selectedOption={selectedOption}
+          selectedRank={selectedRank}
+        />
       </div>
     </div>
   );

@@ -30,9 +30,25 @@ app.get("/allGamesPlayedNA", async (req, res) => {
 });
 
 //Find Top Played Team Comps
-app.get("/topTeamCompsNA", async (req, res) => {
+app.get("/getTopTeamCompsNA", async (req, res) => {
   try {
-    const topTeamComps = await TeamComp.find({}).sort({ played: -1 }).limit(10);
+    const modelName = req.query.gameType;
+
+    const TeamCompModel = mongoose.model(modelName, teamCompSchema);
+
+    let topTeamComps;
+    if (req.query.filterOption === "popularPick") {
+      topTeamComps = await TeamCompModel.find({})
+        .sort({ played: -1, winRate: -1 }) //Sort by played amount than win rate
+        .limit(20);
+    } else {
+      topTeamComps = await TeamCompModel.find({
+        played: { $gte: 2 }, // Filter by at least two plays
+      })
+        .sort({ winRate: -1, played: -1 }) //Sort by win rate than played amount
+        .limit(20);
+    }
+
     res.status(200).json(topTeamComps);
   } catch (error) {
     res.status(500).json({ message: error.message });
