@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import CallAPI from "./callAPI";
 import { regions, gameModes, rankImages } from "./constant/gameDetails";
+import CallAPI from "./callAPI";
 import TeamCompCards from "./component/teamCompCards";
 
 // import ironImage from "./assets/Ranks/Season_2022-Iron.webp";
@@ -17,7 +17,6 @@ function App() {
       setSelectedRegion(option);
     } else if (type === "mode") {
       setSelectedMode(option);
-      console.log(selectedMode);
     } else if (type === "option") {
       setSelectedOption(option);
     } else {
@@ -28,17 +27,16 @@ function App() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col ">
       {/* <CallAPI /> */}
       <div className="flex h-1/5 w-full items-center justify-center bg-sky-900 py-4 text-center">
-        <div className="text-6xl font-bold text-yellow-400">
-          {" "}
+        <div className="text-xl font-bold text-yellow-400 lg:text-6xl">
           League of Legends Team Comp{" "}
         </div>
       </div>
       <div className="flex h-1/6 w-full flex-col items-center justify-between bg-sky-900 py-4 text-center lg:flex-row">
         <div className="ml-4 flex flex-row">
-          <div className="flex flex-row">
+          <div className="flex flex-row space-x-4">
             <select
               id="region"
               name="region"
@@ -112,14 +110,14 @@ function App() {
                 selectedMode !== "Solo/Duo" && selectedMode !== "Flex"
                   ? "grayscale"
                   : ""
-              } ${selectedRank == index ? "bg-white" : ""}`}
+              } ${selectedRank == index ? "rankImage" : "grayscale"}`}
             >
               <img src={image} alt={image} />
             </button>
           ))}
         </div>
       </div>
-      <div className="flex h-4/6 w-full items-center justify-center">
+      <div className="flex h-4/6 w-full items-center justify-center ">
         <TeamCompCards
           selectedRegion={selectedRegion}
           selectedMode={selectedMode}

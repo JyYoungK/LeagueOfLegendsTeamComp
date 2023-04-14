@@ -44,6 +44,10 @@ app.get("/getTopTeamCompsNA", async (req, res) => {
     } else {
       topTeamComps = await TeamCompModel.find({
         played: { $gte: 2 }, // Filter by at least two plays
+        $or: [
+          { winRate: 1 }, // winRate is 1 or above
+          { winRate: { $gte: 50 } }, // winRate is above 50
+        ],
       })
         .sort({ winRate: -1, played: -1 }) //Sort by win rate than played amount
         .limit(20);

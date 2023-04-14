@@ -1,3 +1,17 @@
+body {
+  background-color: rgb(7 89 133);
+}
+
 .lolTitle {
   text-shadow: 2px 2px #ce9211;
+}
+
+.rankImage {
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.rankImage:hover,
+.rankImage:focus {
+  transform: scale(1.1);
+  filter: brightness(1.7) saturate(1.5);
 }
