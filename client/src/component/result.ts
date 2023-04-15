@@ -47,9 +47,16 @@ const getHighestFlexRank = (teamTiers: Array<[string, string]>): string => {
 
 function splitNumber(num: number): [number, number] {
   const numStr = num.toString();
-  const firstTwoDigits = parseInt(numStr.slice(0, 2));
-  const lastTwoDigits = parseInt(numStr.slice(2, 4));
-  return [firstTwoDigits, lastTwoDigits];
+  let minute;
+  let second;
+  if (numStr.length == 4) {
+    minute = parseInt(numStr.slice(0, 2));
+    second = parseInt(numStr.slice(2, 4));
+  } else {
+    minute = parseInt(numStr.slice(0, 1));
+    second = parseInt(numStr.slice(1, 3));
+  }
+  return [minute, second];
 }
 
 export const createTeamCompObjects = async (

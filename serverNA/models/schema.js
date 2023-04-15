@@ -22,7 +22,7 @@ const teamCompSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please enter kills"],
     },
-    death: {
+    deaths: {
       type: Number,
       required: [true, "Please enter death"],
     },
