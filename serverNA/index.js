@@ -68,7 +68,7 @@ app.post("/updateTeamCompsNA", async (req, res) => {
     //Only show gameTier if it's ranked games
     if (gameType === "Ranked Solo" || gameType === "Ranked Flex") {
       modelName = req.body.gameTier + gameType.replace(" ", "");
-    } else if (gameType === "Ranked Flex") {
+    } else {
       modelName = gameType.replace(" ", "");
     }
 
