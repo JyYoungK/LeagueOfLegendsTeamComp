@@ -4,50 +4,58 @@ import { createTeamCompObjects } from "./component/result";
 const ChampionStats: React.FC = () => {
   const region = ["americas", "NA1_", "na1"];
   // const gameIDs = Array.from({ length: 1000000 }, (_, i) => 4625431000 + i);
-  const gameIDs = Array.from({ length: 2000000 }, (_, i) => 4626453000 + i);
+  // const gameIDs = Array.from({ length: 2000000 }, (_, i) => 4626453000 + i);
+  const gameIDs = Array.from({ length: 200 }, (_, i) => 4626453000 + i);
+
   //4625425939
 
-  // useEffect(() => {
-  //   const updateTeamCompData = async () => {
-  //     for (const id of gameIDs) {
-  //       try {
-  //         const link = `https://${
-  //           region[0]
-  //         }.api.riotgames.com/lol/match/v5/matches/${region[1]}${id}?api_key=${
-  //           import.meta.env.VITE_LOL_DEVELOPER_API_KEY
-  //         }`;
-  //         const response = await fetch(link);
-  //         const data = await response.json();
+  useEffect(() => {
+    const updateTeamCompData = async () => {
+      for (const id of gameIDs) {
+        try {
+          const link = `https://${
+            region[0]
+          }.api.riotgames.com/lol/match/v5/matches/${region[1]}${id}?api_key=${
+            import.meta.env.VITE_LOL_DEVELOPER_API_KEY
+          }`;
+          const response = await fetch(link);
+          const data = await response.json();
 
-  //         const [teamCompWinner, teamCompLoser] = await createTeamCompObjects(
-  //           region,
-  //           data
-  //         );
-  //         console.log(teamCompWinner);
-  //         console.log(teamCompLoser);
+          const [teamCompWinner, teamCompLoser] = await createTeamCompObjects(
+            region,
+            data
+          );
+          console.log(teamCompWinner);
+          console.log(teamCompLoser);
 
-  //         await fetch("http://localhost:5000/updateTeamCompsNA", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify(teamCompWinner),
-  //         });
-  //         await fetch("http://localhost:5000/updateTeamCompsNA", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify(teamCompLoser),
-  //         });
-  //       } catch (error) {
-  //         console.log(`Error fetching data for game ID ${id}:`, error);
-  //       }
-  //     }
-  //   };
+          await fetch(
+            "https://lolteamcompnaserver.onrender.com/updateTeamCompsNA",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(teamCompWinner),
+            }
+          );
+          await fetch(
+            "https://lolteamcompnaserver.onrender.com/updateTeamCompsNA",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(teamCompLoser),
+            }
+          );
+        } catch (error) {
+          console.log(`Error fetching data for game ID ${id}:`, error);
+        }
+      }
+    };
 
-  //   updateTeamCompData();
-  // }, []);
+    updateTeamCompData();
+  }, []);
 
   return (
     <div>

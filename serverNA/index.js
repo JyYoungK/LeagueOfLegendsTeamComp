@@ -82,6 +82,10 @@ app.post("/updateTeamCompsNA", async (req, res) => {
       // If a document with the given teamCompName already exists, update it
       const updateQuery = {};
       updateQuery.played = existingTeamComp.played + 1;
+      updateQuery.gameDuration =
+        existingTeamComp.gameDuration + req.body.gameDuration;
+      updateQuery.kills = existingTeamComp.kills + req.body.kills;
+      updateQuery.deaths = existingTeamComp.deaths + req.body.deaths;
       if (req.body.result) {
         // If Result is true, increment win property
         updateQuery.win = existingTeamComp.win + 1;
@@ -103,6 +107,9 @@ app.post("/updateTeamCompsNA", async (req, res) => {
       // If a document with the given teamCompName does not exist, create a new one
       const newTeamComp = await TeamCompModel.create({
         ...req.body,
+        gameDuration: req.body.gameDuration,
+        kills: req.body.kills,
+        deaths: req.body.deaths,
         played: 1,
         winRate: req.body.result ? 100 : 0,
         win: req.body.result ? 1 : 0,

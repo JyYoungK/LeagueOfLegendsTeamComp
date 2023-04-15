@@ -14,6 +14,18 @@ const teamCompSchema = mongoose.Schema(
       type: Boolean,
       required: [true, "Please enter result"],
     },
+    gameDuration: {
+      type: [Number, Number],
+      required: [true, "Please enter game duration"],
+    },
+    kills: {
+      type: Number,
+      required: [true, "Please enter kills"],
+    },
+    death: {
+      type: Number,
+      required: [true, "Please enter death"],
+    },
     played: {
       type: Number,
       default: 0, // Initialize win to 0 by default
