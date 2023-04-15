@@ -35,3 +35,19 @@ export const rankTitles = [
 // const regions = ["NA", "KR", "EUW", "EU", "JPN"];
 export const gameModes = ["Normal", "ARAM", "Solo/Duo", "Flex"];
 export const regions = ["NA"];
+
+export function formatTime(seconds: number) {
+  let hours = Math.floor(seconds / 3600);
+  let minutes = Math.floor((seconds % 3600) / 60);
+  let remainingSeconds = (seconds % 3600) % 60;
+
+  // Pad the numbers with leading zeros if necessary
+  let hoursString = hours > 0 ? hours.toString().padStart(2, "0") + ":" : "";
+  let minutesString = minutes.toString().padStart(2, "0");
+  let remainingSecondsString = remainingSeconds
+    .toFixed(0)
+    .padStart(2, "0")
+    .toString();
+
+  return `${hoursString}${minutesString}:${remainingSecondsString}`;
+}

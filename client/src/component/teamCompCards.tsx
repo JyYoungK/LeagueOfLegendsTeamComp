@@ -6,7 +6,7 @@ import {
   getRoleImage,
   getChampionStats,
 } from "../championAnalysis";
-import { rankTitles } from "../constant/gameDetails";
+import { rankTitles, formatTime } from "../constant/gameDetails";
 import LOLLoading from "../assets/LOLLoading.gif";
 
 //https://op.gg/api/v1.0/internal/bypass/champions/na/ranked
@@ -15,6 +15,10 @@ interface CompData {
   teamCompName: string;
   played: number;
   winRate: number;
+  win: number;
+  gameDuration: number;
+  kills: number;
+  deaths: number;
 }
 
 function teamCompCards({
@@ -124,15 +128,36 @@ function teamCompCards({
                     )
                   )}
               </div>
-              <div className="ml-0 mt-2 flex flex-row space-x-4 text-lg font-bold text-yellow-500 shadow-xl lg:ml-4 lg:mt-0 lg:min-w-[400px] lg:text-3xl">
-                <div className="">
-                  WIN RATE:{" "}
-                  <span className="text-white">
-                    {item.winRate === 1 ? "100%" : `${item.winRate}%`}
-                  </span>
+              <div className="ml-0 mt-2 flex flex-col space-x-4 text-lg font-bold text-yellow-500 shadow-xl lg:ml-4 lg:mt-0 lg:min-w-[400px] lg:text-3xl">
+                <div className="flex flex-row">
+                  <div className="">
+                    WIN RATE:{" "}
+                    <span className="text-white">
+                      {/* {item.winRate === 1 ? "100%" : `${item.winRate}%`} */}
+                      {((item.win / item.played) * 100).toFixed(2) + `%`}
+                    </span>
+                  </div>
+                  <div className="">
+                    PLAYED: <span className="text-white">{item.played}</span>
+                  </div>
                 </div>
-                <div className="">
-                  PLAYED: <span className="text-white">{item.played}</span>
+                <div className="flex flex-row">
+                  <div className="">
+                    AVERAGE KILLS:{" "}
+                    <span className="text-white">
+                      {(item.kills / item.played).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="">
+                    AVERAGE DEATHS:{" "}
+                    <span className="text-white">
+                      {(item.deaths / item.played).toFixed(2)}
+                    </span>{" "}
+                  </div>
+                </div>
+                <div>
+                  AVERAGE GAME LENGTH:{" "}
+                  {formatTime(item.gameDuration / item.played)}
                 </div>
               </div>
             </div>

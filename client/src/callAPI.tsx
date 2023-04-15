@@ -5,7 +5,7 @@ const ChampionStats: React.FC = () => {
   const region = ["americas", "NA1_", "na1"];
   // const gameIDs = Array.from({ length: 1000000 }, (_, i) => 4625431000 + i);
   // const gameIDs = Array.from({ length: 2000000 }, (_, i) => 4626453000 + i);
-  const gameIDs = Array.from({ length: 400 }, (_, i) => 4626453000 + i);
+  const gameIDs = Array.from({ length: 400000 }, (_, i) => 4626453400 + i);
 
   //4625425939
 

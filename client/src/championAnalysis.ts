@@ -10,7 +10,7 @@ import { championDetails } from "./constant/championDetail";
 
 export function getChampionNameAndRole(teamCompName: string) {
   const champions = teamCompName.split(", ").map((champion: string) => {
-    const [name, role] = champion.split("-");
+    const [role, name] = champion.split("-");
     return { name, role };
   });
   return champions;
@@ -70,7 +70,7 @@ export function getTeamCompOverview(teamCompName: string) {
   let powerSpikeColor;
 
   const severeCount = teamDifficulty.filter(
-    (difficulty) => difficulty === "Hard"
+    (difficulty) => difficulty === "Severe"
   ).length;
   const hardCount = teamDifficulty.filter(
     (difficulty) => difficulty === "Hard"
