@@ -45,20 +45,6 @@ const getHighestFlexRank = (teamTiers: Array<[string, string]>): string => {
   return sortedTiers.length > 0 ? sortedTiers[0][1] : "UNRANKED";
 };
 
-function splitNumber(num: number): [number, number] {
-  const numStr = num.toString();
-  let minute;
-  let second;
-  if (numStr.length == 4) {
-    minute = parseInt(numStr.slice(0, 2));
-    second = parseInt(numStr.slice(2, 4));
-  } else {
-    minute = parseInt(numStr.slice(0, 1));
-    second = parseInt(numStr.slice(1, 3));
-  }
-  return [minute, second];
-}
-
 export const createTeamCompObjects = async (
   region: string[],
   data: any
@@ -125,7 +111,7 @@ export const createTeamCompObjects = async (
     region: region[1],
     gameType: gameType,
     gameTier: highestRank,
-    gameDuration: splitNumber(parseInt(data.info.gameDuration)),
+    gameDuration: data.info.gameDuration,
     teamCompName: winningChampions.sort().join(", "),
     kills: winnerKills,
     deaths: winnerDeath,
@@ -136,7 +122,7 @@ export const createTeamCompObjects = async (
     region: region[1],
     gameType: gameType,
     gameTier: highestRank,
-    gameDuration: splitNumber(parseInt(data.info.gameDuration)),
+    gameDuration: data.info.gameDuration,
     teamCompName: losingChampions.sort().join(", "),
     kills: loserKills,
     deaths: loserDeath,

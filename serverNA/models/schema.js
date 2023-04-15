@@ -15,7 +15,7 @@ const teamCompSchema = mongoose.Schema(
       required: [true, "Please enter result"],
     },
     gameDuration: {
-      type: [Number, Number],
+      type: Number,
       required: [true, "Please enter game duration"],
     },
     kills: {

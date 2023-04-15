@@ -2,7 +2,7 @@ export interface TeamComp {
   region: string;
   gameType: string;
   gameTier: string;
-  gameDuration: [number, number];
+  gameDuration: number;
   teamCompName: string;
   kills: number;
   deaths: number;
