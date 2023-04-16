@@ -118,6 +118,11 @@ const Sidebar = ({
               ))}
             </select>
           </div>
+
+          <RiCloseLine
+            className="absolute bottom-4 left-1/2 h-8 w-8 -translate-x-1/2 transform rounded-full border-2 border-white text-white"
+            onClick={() => setMobileMenuOpen(false)}
+          />
         </div>
       </div>
     </>
