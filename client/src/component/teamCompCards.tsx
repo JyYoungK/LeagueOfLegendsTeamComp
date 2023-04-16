@@ -8,6 +8,9 @@ import {
 } from "../championAnalysis";
 import { rankTitles, formatTime } from "../constant/gameDetails";
 import LOLLoading from "../assets/LOLLoading.gif";
+import PlayedLogo from "../assets/PlayedLogo.png";
+import KillsLogo from "../assets/KillsLogo.png";
+import TimeLogo from "../assets/TimeLogo.png";
 
 //https://op.gg/api/v1.0/internal/bypass/champions/na/ranked
 
@@ -53,39 +56,56 @@ function teamCompCards({
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center text-center">
+      <div className="flex w-full flex-row items-center justify-center py-4 text-center">
+        {/* Tier */}
+        <div className="lg: min-w-[300px] text-2xl font-bold">TIER</div>
+        {/* Comp */}
+        <div className="lg: min-w-[600px] text-2xl font-bold">TEAM COMP</div>
+        {/* Win Rate */}
+        <div className="lg: min-w-[170px] text-2xl font-bold">WIN RATE</div>
+        {/* Played */}
+        <div className="lg: min-w-[170px] text-2xl font-bold">PLAYED</div>
+        {/* Avg Kills */}
+        <div className="lg: min-w-[170px] text-2xl font-bold">AVG KILLS</div>
+        {/* Avg Game Length */}
+        <div className="lg: min-w-[170px] text-2xl font-bold">AVG TIME</div>
+      </div>
       {isLoadingData ? (
         <div className="flex h-full w-full items-center justify-center text-center">
           <img src={LOLLoading} alt="loading" />
         </div>
       ) : teamCompData.length > 0 ? (
         teamCompData.map((item, index) => {
-          let tier;
-          if (item.winRate > 70 || item.winRate == 1) {
-            tier = "S";
-          } else if (item.winRate > 60) {
-            tier = "A";
-          } else if (item.winRate > 50) {
-            tier = "B";
-          } else {
-            tier = "C";
-          }
+          // let tier;
+          // if (item.winRate > 70 || item.winRate == 1) {
+          //   tier = "S";
+          // } else if (item.winRate > 60) {
+          //   tier = "A";
+          // } else if (item.winRate > 50) {
+          //   tier = "B";
+          // } else {
+          //   tier = "C";
+          // }
 
           return (
             <div
               className="my-2 flex flex-col items-center rounded-xl border-4 border-black bg-gray-800 p-4 lg:flex-row"
               key={index}
             >
-              <div className="mb-4 flex flex-row lg:mb-0 ">
-                <img
+              <div className="mb-4 flex flex-row items-center justify-evenly text-center lg:mb-0 lg:min-w-[300px]">
+                {/* <img
                   src={`https://cdn.mobalytics.gg/assets/common/icons/hex-tiers/${tier}.svg?2`}
                   alt={`Comp Tier ${tier}`}
                   className="h-16 w-16"
-                />
-                <div className="mx-4 flex flex-row space-x-2 lg:min-w-[170px] lg:flex-col  lg:space-x-0">
+                /> */}
+                <div className=" mr-2 items-center text-5xl text-gray-300">
+                  {index + 1}
+                </div>
+                <div className="flex flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
                   <div
                     className={`${
                       getTeamCompOverview(item.teamCompName).difficultyColor
-                    } text-md rounded-lg p-2 font-bold text-gray-200 lg:text-lg `}
+                    } text-md mt-2 rounded-lg p-2 font-bold text-gray-200 lg:text-lg`}
                   >
                     {getTeamCompOverview(item.teamCompName).difficulty}{" "}
                     Difficulty
@@ -100,7 +120,7 @@ function teamCompCards({
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row">
+              <div className="flex flex-row lg:min-w-[600px]">
                 {item.teamCompName &&
                   getChampions(item.teamCompName).map(
                     (champion: any, index: number) => (
@@ -117,7 +137,7 @@ function teamCompCards({
                             className="absolute bottom-0 right-2 h-4 w-4 lg:bottom-2 lg:right-2 lg:h-6 lg:w-6"
                           />
                         </div>
-                        <div className="text-sm font-bold text-white lg:text-xl">
+                        <div className="text-sm font-bold text-white lg:text-xl ">
                           WR:{" "}
                           {(
                             getChampionStats(champion.name)?.win_rate * 100
@@ -128,37 +148,29 @@ function teamCompCards({
                     )
                   )}
               </div>
-              <div className="ml-0 mt-2 flex flex-col space-x-4 text-lg font-bold text-yellow-500 shadow-xl lg:ml-4 lg:mt-0 lg:min-w-[400px] lg:text-3xl">
-                <div className="flex flex-row">
-                  <div className="">
-                    WIN RATE:{" "}
-                    <span className="text-white">
-                      {/* {item.winRate === 1 ? "100%" : `${item.winRate}%`} */}
-                      {((item.win / item.played) * 100).toFixed(2) + `%`}
-                    </span>
-                  </div>
-                  <div className="">
-                    PLAYED: <span className="text-white">{item.played}</span>
-                  </div>
+              <div className="ml-0 mt-2 flex flex-row justify-center text-center text-lg font-bold text-yellow-500 lg:mt-0 lg:text-3xl">
+                <div className="lg:min-w-[170px]">
+                  {((item.win / item.played) * 100).toFixed(2) + `%`}
                 </div>
-                <div className="flex flex-row">
-                  <div className="">
-                    AVERAGE KILLS:{" "}
-                    <span className="text-white">
-                      {(item.kills / item.played).toFixed(0)}
-                    </span>
-                  </div>
-                  {/* <div className="">
+                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
+                  {item.played}
+                  <img src={PlayedLogo} className="ml-2 mt-0.5 h-8 w-8 " />
+                </div>
+                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
+                  {(item.kills / item.played).toFixed(0)}
+                  <img src={KillsLogo} className="ml-2 mt-0.5 h-8 w-8 " />
+                </div>
+                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
+                  {formatTime(item.gameDuration / item.played)}
+                  <img src={TimeLogo} className="ml-2 mt-0.5 h-8 w-8 " />
+                </div>
+
+                {/* <div className="">
                     AVERAGE DEATHS:{" "}
                     <span className="text-white">
                       {(item.deaths / item.played).toFixed(0)}
                     </span>{" "}
                   </div> */}
-                </div>
-                <div>
-                  AVERAGE GAME LENGTH:{" "}
-                  {formatTime(item.gameDuration / item.played)}
-                </div>
               </div>
             </div>
           );

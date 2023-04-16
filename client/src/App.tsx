@@ -64,7 +64,7 @@ function App() {
               ))}
             </select>
           </div>
-          <div className="ml-4 flex items-center space-x-4">
+          <div className="ml-4 flex items-center space-x-4 text-lg">
             <div className="flex items-center">
               <input
                 type="radio"
