@@ -91,7 +91,7 @@ export function getTeamCompOverview(teamCompName: string) {
     difficulty = "Easy";
     difficultyColor = "bg-[#037d50]";
   } else {
-    difficulty = "Average";
+    difficulty = "Normal";
     difficultyColor = "bg-[#ec9a00]";
   }
   if (lateCount >= 2) {

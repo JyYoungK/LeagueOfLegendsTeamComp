@@ -35,7 +35,13 @@ function App() {
           LOL Team Comp
         </div>
       </div>
-      <Sidebar />
+      <Sidebar
+        selectedRegion={selectedRegion}
+        selectedMode={selectedMode}
+        selectedOption={selectedOption}
+        selectedRank={selectedRank}
+        handleOptionChange={handleOptionChange}
+      />
       {/* NavBar */}
       <div className="hidden lg:block">
         <Navbar

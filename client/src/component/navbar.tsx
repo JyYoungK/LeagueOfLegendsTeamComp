@@ -44,7 +44,7 @@ function navbar({
           <div className="flex items-center">
             <input
               type="radio"
-              name="option"
+              name="popularPickOption"
               value="popularPick"
               checked={selectedOption === "popularPick"}
               onChange={() => handleOptionChange("option", "popularPick")}
@@ -57,7 +57,7 @@ function navbar({
           <div className="flex items-center">
             <input
               type="radio"
-              name="option"
+              name="highestWinPickOption"
               value="highestWinRate"
               checked={selectedOption === "highestWinRate"}
               onChange={() => handleOptionChange("option", "highestWinRate")}
