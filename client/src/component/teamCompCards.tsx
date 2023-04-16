@@ -11,18 +11,9 @@ import LOLLoading from "../assets/LOLLoading.gif";
 import PlayedLogo from "../assets/PlayedLogo.png";
 import KillsLogo from "../assets/KillsLogo.png";
 import TimeLogo from "../assets/TimeLogo.png";
+import { CompData } from "../type";
 
 //https://op.gg/api/v1.0/internal/bypass/champions/na/ranked
-
-interface CompData {
-  teamCompName: string;
-  played: number;
-  winRate: number;
-  win: number;
-  gameDuration: number;
-  kills: number;
-  deaths: number;
-}
 
 function teamCompCards({
   selectedRegion,
@@ -55,133 +46,150 @@ function teamCompCards({
   }, [selectedMode, selectedOption, selectedRank]);
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center text-center">
+    <div className="flex h-full w-full flex-col items-center justify-center px-2 text-center">
       <div className="flex w-full flex-row items-center justify-center py-4 text-center">
         {/* Tier */}
-        <div className="lg: min-w-[300px] text-2xl font-bold">TIER</div>
+        <div className="hidden w-1/5 text-2xl font-bold xl:block">TIER</div>
         {/* Comp */}
-        <div className="lg: min-w-[600px] text-2xl font-bold">TEAM COMP</div>
-        {/* Win Rate */}
-        <div className="lg: min-w-[170px] text-2xl font-bold">WIN RATE</div>
-        {/* Played */}
-        <div className="lg: min-w-[170px] text-2xl font-bold">PLAYED</div>
-        {/* Avg Kills */}
-        <div className="lg: min-w-[170px] text-2xl font-bold">AVG KILLS</div>
-        {/* Avg Game Length */}
-        <div className="lg: min-w-[170px] text-2xl font-bold">AVG TIME</div>
-      </div>
-      {isLoadingData ? (
-        <div className="flex h-full w-full items-center justify-center text-center">
-          <img src={LOLLoading} alt="loading" />
+        <div className="hidden w-2/5 text-2xl font-bold xl:block">
+          TEAM COMP
         </div>
-      ) : teamCompData.length > 0 ? (
-        teamCompData.map((item, index) => {
-          // let tier;
-          // if (item.winRate > 70 || item.winRate == 1) {
-          //   tier = "S";
-          // } else if (item.winRate > 60) {
-          //   tier = "A";
-          // } else if (item.winRate > 50) {
-          //   tier = "B";
-          // } else {
-          //   tier = "C";
-          // }
+        {/* Win Rate */}
+        <div className="hidden w-1/10 text-2xl font-bold xl:block">
+          WIN RATE
+        </div>
+        {/* Played */}
+        <div className="hidden w-1/10 text-2xl font-bold xl:block">PLAYED</div>
+        {/* Avg Kills */}
+        <div className="hidden w-1/10 text-2xl font-bold xl:block">
+          AVG KILLS
+        </div>
+        {/* Avg Game Length */}
+        <div className="hidden w-1/10 text-2xl font-bold xl:block">
+          AVG TIME
+        </div>
+      </div>
+      <div className="w-full items-center justify-center py-4 text-center">
+        {isLoadingData ? (
+          <div className="flex h-full w-full items-center justify-center px-2 text-center">
+            <img src={LOLLoading} alt="loading" />
+          </div>
+        ) : teamCompData.length > 0 ? (
+          teamCompData.map((item, index) => {
+            // let tier;
+            // if (item.winRate > 70 || item.winRate == 1) {
+            //   tier = "S";
+            // } else if (item.winRate > 60) {
+            //   tier = "A";
+            // } else if (item.winRate > 50) {
+            //   tier = "B";
+            // } else {
+            //   tier = "C";
+            // }
 
-          return (
-            <div
-              className="my-2 flex flex-col items-center rounded-xl border-4 border-black bg-gray-800 p-4 lg:flex-row"
-              key={index}
-            >
-              <div className="mb-4 flex flex-row items-center justify-evenly text-center lg:mb-0 lg:min-w-[300px]">
-                {/* <img
-                  src={`https://cdn.mobalytics.gg/assets/common/icons/hex-tiers/${tier}.svg?2`}
-                  alt={`Comp Tier ${tier}`}
-                  className="h-16 w-16"
-                /> */}
-                <div className=" mr-2 items-center text-5xl text-gray-300">
-                  {index + 1}
-                </div>
-                <div className="flex flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
-                  <div
-                    className={`${
-                      getTeamCompOverview(item.teamCompName).difficultyColor
-                    } text-md mt-2 rounded-lg p-2 font-bold text-gray-200 lg:text-lg`}
-                  >
-                    {getTeamCompOverview(item.teamCompName).difficulty}{" "}
-                    Difficulty
+            return (
+              <div
+                className="my-2 flex w-full flex-col items-center rounded-xl border-4 border-green-400 bg-gray-800 p-4 lg:flex-row"
+                key={index}
+              >
+                {/* --------------------- Tier --------------------- */}
+                <div className="mb-4 flex w-full flex-row items-center justify-evenly px-2 text-center lg:mb-0 lg:w-1/5">
+                  <div className="mr-2 w-1/3 items-center text-2xl text-gray-300 lg:text-5xl">
+                    {index + 1}
                   </div>
-                  <div
-                    className={`${
-                      getTeamCompOverview(item.teamCompName).powerSpikeColor
-                    } text-md rounded-lg p-2 font-bold lg:text-lg`}
-                  >
-                    {getTeamCompOverview(item.teamCompName).powerSpike} Game
-                    Comp
+                  <div className="flex w-2/3 flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
+                    <div
+                      className={`${
+                        getTeamCompOverview(item.teamCompName).difficultyColor
+                      } rounded-md p-2 text-sm font-bold text-gray-200 lg:mt-2 lg:text-lg`}
+                    >
+                      {getTeamCompOverview(item.teamCompName).difficulty}{" "}
+                      Difficulty
+                    </div>
+                    <div
+                      className={`${
+                        getTeamCompOverview(item.teamCompName).powerSpikeColor
+                      } rounded-md p-2 text-sm font-bold lg:text-lg`}
+                    >
+                      {getTeamCompOverview(item.teamCompName).powerSpike} Game
+                      Comp
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-row lg:min-w-[600px]">
-                {item.teamCompName &&
-                  getChampions(item.teamCompName).map(
-                    (champion: any, index: number) => (
-                      <div key={index}>
-                        <div className="relative mx-2 ">
-                          <img
-                            className="h-12 w-12 rounded-full border-4 border-black lg:h-24 lg:w-24"
-                            src={`https://cdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${champion.name.toLowerCase()}.png?v3`}
-                            alt={champion.name}
-                          />
-                          <img
-                            src={getRoleImage(champion.role)}
-                            alt={champion.role}
-                            className="absolute bottom-0 right-2 h-4 w-4 lg:bottom-2 lg:right-2 lg:h-6 lg:w-6"
-                          />
+                {/* --------------------- Team Comp --------------------- */}
+                <div className="flex w-full flex-row justify-center lg:w-2/5">
+                  {item.teamCompName &&
+                    getChampions(item.teamCompName).map(
+                      (champion: any, index: number) => (
+                        <div key={index}>
+                          <div className="relative mx-3 ">
+                            <img
+                              className="h-12 w-12 rounded-full border-4 border-black lg:h-24 lg:w-24"
+                              src={`https://cdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${champion.name.toLowerCase()}.png?v3`}
+                              alt={champion.name}
+                            />
+                            <img
+                              src={getRoleImage(champion.role)}
+                              alt={champion.role}
+                              className="absolute bottom-0 right-2 h-4 w-4 lg:bottom-2 lg:right-2 lg:h-6 lg:w-6"
+                            />
+                          </div>
+                          <div className="text-xs font-bold text-white lg:text-xl ">
+                            WR:{" "}
+                            {(
+                              getChampionStats(champion.name)?.win_rate * 100
+                            ).toFixed(1)}
+                            %
+                          </div>
                         </div>
-                        <div className="text-sm font-bold text-white lg:text-xl ">
-                          WR:{" "}
-                          {(
-                            getChampionStats(champion.name)?.win_rate * 100
-                          ).toFixed(1)}
-                          %
-                        </div>
-                      </div>
-                    )
-                  )}
-              </div>
-              <div className="ml-0 mt-2 flex flex-row justify-center text-center text-lg font-bold text-yellow-500 lg:mt-0 lg:text-3xl">
-                <div className="lg:min-w-[170px]">
-                  {((item.win / item.played) * 100).toFixed(2) + `%`}
+                      )
+                    )}
                 </div>
-                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
-                  {item.played}
-                  <img src={PlayedLogo} className="ml-2 mt-0.5 h-8 w-8 " />
-                </div>
-                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
-                  {(item.kills / item.played).toFixed(0)}
-                  <img src={KillsLogo} className="ml-2 mt-0.5 h-8 w-8 " />
-                </div>
-                <div className="flex flex-row justify-center text-center lg:min-w-[170px]">
-                  {formatTime(item.gameDuration / item.played)}
-                  <img src={TimeLogo} className="ml-2 mt-0.5 h-8 w-8 " />
-                </div>
+                {/* --------------------- Stats --------------------- */}
+                <div className="text-md ml-0 mt-2 flex w-full flex-row justify-center space-x-4 text-center font-bold text-yellow-500 lg:mt-0 lg:w-2/5 lg:space-x-0 lg:text-3xl">
+                  <div className="w-1/4">
+                    {((item.win / item.played) * 100).toFixed(2) + `%`}
+                  </div>
+                  <div className="flex w-1/4 flex-row justify-center text-center">
+                    {item.played}
+                    <img
+                      src={PlayedLogo}
+                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                    />
+                  </div>
+                  <div className="flex w-1/4 flex-row justify-center text-center">
+                    {(item.kills / item.played).toFixed(0)}
+                    <img
+                      src={KillsLogo}
+                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                    />
+                  </div>
+                  <div className="flex w-1/4 flex-row justify-center text-center">
+                    {formatTime(item.gameDuration / item.played)}
+                    <img
+                      src={TimeLogo}
+                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                    />
+                  </div>
 
-                {/* <div className="">
+                  {/* <div className="">
                     AVERAGE DEATHS:{" "}
                     <span className="text-white">
                       {(item.deaths / item.played).toFixed(0)}
                     </span>{" "}
                   </div> */}
+                </div>
               </div>
+            );
+          })
+        ) : (
+          <div className="my-2 flex h-full flex-row items-center justify-center rounded-xl border-4 border-black bg-gray-800 p-4">
+            <div className="flex w-full items-center justify-center text-center text-3xl font-bold text-white shadow-xl">
+              No Data Available
             </div>
-          );
-        })
-      ) : (
-        <div className="my-2 flex h-full flex-row items-center justify-center rounded-xl border-4 border-black bg-gray-800 p-4">
-          <div className="flex min-h-[120px] min-w-[1250px] items-center justify-center text-center text-3xl font-bold text-white shadow-xl">
-            No Data Available
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
