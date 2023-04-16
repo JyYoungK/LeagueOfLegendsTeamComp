@@ -93,11 +93,11 @@ function teamCompCards({
                 key={index}
               >
                 {/* --------------------- Tier --------------------- */}
-                <div className="mb-4 flex w-full flex-row items-center justify-evenly px-2 text-center lg:mb-0 lg:w-1/5">
-                  <div className="mr-2 w-1/3 items-center text-2xl text-gray-300 lg:text-5xl">
+                <div className="mb-4 flex w-full flex-row items-center justify-center px-2 text-center lg:mb-0 lg:w-1/5 lg:justify-evenly">
+                  <div className="mr-2 w-1/4 items-center text-2xl text-gray-300 lg:text-5xl">
                     {index + 1}
                   </div>
-                  <div className="flex w-2/3 flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
+                  <div className="flex w-3/4 flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
                     <div
                       className={`${
                         getTeamCompOverview(item.teamCompName).difficultyColor
@@ -154,21 +154,21 @@ function teamCompCards({
                     {item.played}
                     <img
                       src={PlayedLogo}
-                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
                   <div className="flex w-1/4 flex-row justify-center text-center">
                     {(item.kills / item.played).toFixed(0)}
                     <img
                       src={KillsLogo}
-                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
                   <div className="flex w-1/4 flex-row justify-center text-center">
                     {formatTime(item.gameDuration / item.played)}
                     <img
                       src={TimeLogo}
-                      className="ml-1 mt-1.5 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
 
