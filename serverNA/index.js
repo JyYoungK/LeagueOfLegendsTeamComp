@@ -38,7 +38,9 @@ app.get("/getTopTeamCompsNA", async (req, res) => {
 
     let topTeamComps;
     if (req.query.filterOption === "popularPick") {
-      topTeamComps = await TeamCompModel.find({})
+      topTeamComps = await TeamCompModel.find({
+        played: { $gte: 2 }, // Filter by at least two plays
+      })
         .sort({ played: -1, winRate: -1 }) //Sort by played amount than win rate
         .limit(20);
     } else {

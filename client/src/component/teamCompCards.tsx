@@ -145,15 +145,15 @@ function teamCompCards({
                   <div className="">
                     AVERAGE KILLS:{" "}
                     <span className="text-white">
-                      {(item.kills / item.played).toFixed(2)}
+                      {(item.kills / item.played).toFixed(0)}
                     </span>
                   </div>
-                  <div className="">
+                  {/* <div className="">
                     AVERAGE DEATHS:{" "}
                     <span className="text-white">
-                      {(item.deaths / item.played).toFixed(2)}
+                      {(item.deaths / item.played).toFixed(0)}
                     </span>{" "}
-                  </div>
+                  </div> */}
                 </div>
                 <div>
                   AVERAGE GAME LENGTH:{" "}
