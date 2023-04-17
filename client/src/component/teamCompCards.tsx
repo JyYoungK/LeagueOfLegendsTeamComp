@@ -89,15 +89,15 @@ function teamCompCards({
 
             return (
               <div
-                className="my-2 flex w-full flex-col items-center rounded-xl border-4 border-green-400 bg-gray-800 p-4 lg:flex-row"
+                className="my-2 flex h-full w-full flex-col items-center rounded-xl border-4 border-green-400 bg-gray-800 p-4 md:flex-row"
                 key={index}
               >
                 {/* --------------------- Tier --------------------- */}
-                <div className="mb-4 flex w-full flex-row items-center justify-center px-2 text-center lg:mb-0 lg:w-1/5 lg:justify-evenly">
+                <div className="mb-4 flex h-full w-full flex-row items-center justify-center px-2 text-center lg:mb-0 lg:w-1/5 lg:justify-evenly">
                   <div className="mr-2 w-1/4 items-center text-2xl text-gray-300 lg:text-5xl">
                     {index + 1}
                   </div>
-                  <div className="flex w-3/4 flex-row items-center space-x-2 lg:flex-col lg:space-x-0">
+                  <div className="flex w-3/4 flex-row items-center justify-center space-x-2 text-center lg:flex-col lg:space-x-0">
                     <div
                       className={`${
                         getTeamCompOverview(item.teamCompName).difficultyColor
@@ -154,21 +154,21 @@ function teamCompCards({
                     {item.played}
                     <img
                       src={PlayedLogo}
-                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 h-4 w-4 md:ml-2 md:mt-0.5 md:h-6 md:w-6 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
                   <div className="flex w-1/4 flex-row justify-center text-center">
                     {(item.kills / item.played).toFixed(0)}
                     <img
                       src={KillsLogo}
-                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 h-4 w-4 md:ml-2 md:mt-0.5 md:h-6 md:w-6 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
                   <div className="flex w-1/4 flex-row justify-center text-center">
                     {formatTime(item.gameDuration / item.played)}
                     <img
                       src={TimeLogo}
-                      className="ml-1 mt-1 h-4 w-4 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
+                      className="ml-1 h-4 w-4 md:ml-2 md:mt-0.5 md:h-6 md:w-6 lg:ml-2 lg:mt-0.5 lg:h-8 lg:w-8"
                     />
                   </div>
 

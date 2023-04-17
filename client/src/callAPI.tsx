@@ -4,7 +4,7 @@ import { createTeamCompObjects } from "./component/result";
 const ChampionStats: React.FC = () => {
   const region = ["americas", "NA1_", "na1"];
 
-  const gameIDs = Array.from({ length: 400000 }, (_, i) => 4626450400 + i);
+  const gameIDs = Array.from({ length: 60000 }, (_, i) => 4626444400 + i);
 
   //4625425939
 

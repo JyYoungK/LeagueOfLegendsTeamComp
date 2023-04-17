@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="flex h-full w-full flex-col ">
-      {/* <CallAPI /> */}
+      <CallAPI />
       <div className="flex h-1/5 w-full items-center justify-center bg-sky-900 py-4 text-center">
         <div className="text-xl font-bold text-yellow-400 lg:text-6xl">
           LOL Team Comp
