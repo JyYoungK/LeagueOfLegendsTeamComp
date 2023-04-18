@@ -8,7 +8,7 @@ Demo URL: https://league-of-legends-team-comp.vercel.app/
 
 - React as framework
 - Typescript
-- Tailwind/MUI for Design and CS
+- Tailwind/MUI for Design and CSS
 
 ### Backend
 
